@@ -1,3 +1,8 @@
+<!-- Antigravity Instruction -->
+このプロジェクトは上記「開発ワークフロー」に厳密に従って開発されます。
+Antigravityは常にこのドキュメントを参照し、定義されたコマンド（/backup, /publish 等）とプロセスを遵守してください。
+PlanやTaskはArtifactsではなく、`docs/` 配下のマークダウンファイルとして管理してください。
+
 # 開発ワークフロー
 
 ## 概要
