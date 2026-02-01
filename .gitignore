@@ -13,6 +13,9 @@ out/
 .env.local
 .env.*.local
 
+# CLI config (contains API key)
+cli/config.json
+
 # IDE / Editor
 .vscode/
 .idea/

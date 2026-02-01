@@ -1,0 +1,15 @@
+{
+    "name": "recipe-cli",
+    "version": "1.0.0",
+    "description": "YouTube動画からレシピを抽出するCLIツール",
+    "type": "module",
+    "bin": {
+        "recipe": "./index.js"
+    },
+    "scripts": {
+        "extract": "node index.js"
+    },
+    "dependencies": {
+        "youtubei.js": "^16.0.1"
+    }
+}
