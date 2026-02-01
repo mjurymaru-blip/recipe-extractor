@@ -529,11 +529,9 @@ body {
 .step-card {
   background: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  min-height: 200px;
+  padding: var(--space-lg);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   box-shadow: var(--shadow-md);
 }
 
