@@ -26,6 +26,24 @@
       <!-- Recipe List -->
       <section class="recipe-list-section">
         <h2 class="section-title">🍳 レシピ一覧</h2>
+
+        <!-- 検索・フィルター・並び替え -->
+        <div class="filter-bar">
+          <input type="search" id="searchInput" class="filter-bar__search" placeholder="🔍 レシピを検索...">
+          <select id="categoryFilter" class="filter-bar__select">
+            <option value="">すべて</option>
+            <option value="sweets">🍰 スイーツ</option>
+            <option value="camp">🏕️ キャンプ</option>
+            <option value="daily">🍳 日常</option>
+            <option value="other">📦 その他</option>
+          </select>
+          <select id="sortOrder" class="filter-bar__select">
+            <option value="newest">新しい順</option>
+            <option value="oldest">古い順</option>
+            <option value="title">タイトル順</option>
+          </select>
+        </div>
+
         <div class="recipe-grid" id="recipeGrid">
           <!-- レシピカードがここに動的に挿入される -->
           <div class="loading">

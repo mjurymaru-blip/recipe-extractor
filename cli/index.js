@@ -273,12 +273,14 @@ async function main() {
 📖 レシピ抽出 CLI (yt-dlp版)
 
 使い方:
-  node index.js <YouTube URL>    YouTube動画からレシピを抽出
-  node index.js --list           登録済みレシピ一覧
-  node index.js --config         設定を表示
+  node index.js <YouTube URL>       YouTube動画からレシピを抽出
+  node index.js --list              登録済みレシピ一覧
+  node index.js --delete <番号|ID>  レシピを削除
+  node index.js --config            設定を表示
 
 例:
   node index.js https://www.youtube.com/watch?v=QMjRLpdON4E
+  node index.js --delete 1
 `);
         return;
     }
@@ -288,8 +290,42 @@ async function main() {
         const data = await loadRecipes();
         console.log(`\n📋 登録済みレシピ (${data.recipes.length}件)\n`);
         data.recipes.forEach((r, i) => {
-            console.log(`  ${i + 1}. ${r.title}`);
+            console.log(`  ${i + 1}. [${r.id}] ${r.title}`);
         });
+        console.log('\n削除: node index.js --delete <番号 or ID>');
+        return;
+    }
+
+    // 削除
+    if (args[0] === '--delete') {
+        const target = args[1];
+        if (!target) {
+            console.error('❌ 削除対象を指定してください（番号またはID）');
+            console.error('   例: node index.js --delete 1');
+            console.error('   例: node index.js --delete recipe_1769940460110');
+            process.exit(1);
+        }
+
+        const data = await loadRecipes();
+        let deleteIndex = -1;
+
+        // 番号で指定された場合
+        const num = parseInt(target);
+        if (!isNaN(num) && num >= 1 && num <= data.recipes.length) {
+            deleteIndex = num - 1;
+        } else {
+            // IDで指定された場合
+            deleteIndex = data.recipes.findIndex(r => r.id === target);
+        }
+
+        if (deleteIndex === -1) {
+            console.error('❌ 指定されたレシピが見つかりません');
+            process.exit(1);
+        }
+
+        const deleted = data.recipes.splice(deleteIndex, 1)[0];
+        await saveRecipes(data);
+        console.log(`🗑️ 削除しました: ${deleted.title}`);
         return;
     }
 

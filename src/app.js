@@ -9,12 +9,37 @@ let currentRecipe = null;
 let currentStepIndex = 0;
 let allRecipes = [];
 
+// フィルター状態
+let searchQuery = '';
+let categoryFilter = '';
+let sortOrder = 'newest';
+
 /**
  * アプリ初期化
  */
 export async function initApp() {
   // レシピデータを読み込み
   await loadRecipesFromJSON();
+
+  // フィルターイベントリスナー
+  const searchInput = document.getElementById('searchInput');
+  const categorySelect = document.getElementById('categoryFilter');
+  const sortSelect = document.getElementById('sortOrder');
+
+  searchInput?.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase();
+    renderRecipeList();
+  });
+
+  categorySelect?.addEventListener('change', (e) => {
+    categoryFilter = e.target.value;
+    renderRecipeList();
+  });
+
+  sortSelect?.addEventListener('change', (e) => {
+    sortOrder = e.target.value;
+    renderRecipeList();
+  });
 
   console.log('📖 レシピノート - 初期化完了');
 }
@@ -39,18 +64,57 @@ async function loadRecipesFromJSON() {
 }
 
 /**
- * レシピ一覧を表示
+ * レシピ一覧を表示（フィルター・並び替え対応）
  */
 function renderRecipeList() {
   const recipeGrid = document.getElementById('recipeGrid');
   if (!recipeGrid) return;
 
-  if (allRecipes.length === 0) {
-    showEmptyState();
+  // フィルタリング
+  let filteredRecipes = allRecipes.filter(recipe => {
+    // 検索クエリ
+    if (searchQuery) {
+      const titleMatch = recipe.title?.toLowerCase().includes(searchQuery);
+      const ingredientMatch = recipe.ingredients?.some(
+        ing => ing.name?.toLowerCase().includes(searchQuery)
+      );
+      const tagMatch = recipe.tags?.some(
+        tag => tag.toLowerCase().includes(searchQuery)
+      );
+      if (!titleMatch && !ingredientMatch && !tagMatch) return false;
+    }
+
+    // カテゴリフィルター
+    if (categoryFilter && recipe.category !== categoryFilter) {
+      return false;
+    }
+
+    return true;
+  });
+
+  // 並び替え
+  filteredRecipes = filteredRecipes.sort((a, b) => {
+    switch (sortOrder) {
+      case 'oldest':
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      case 'title':
+        return (a.title || '').localeCompare(b.title || '', 'ja');
+      case 'newest':
+      default:
+        return new Date(b.createdAt) - new Date(a.createdAt);
+    }
+  });
+
+  if (filteredRecipes.length === 0) {
+    recipeGrid.innerHTML = `
+      <div class="empty-state">
+        <p class="empty-state__text">${searchQuery || categoryFilter ? '条件に一致するレシピがありません' : 'レシピがありません'}</p>
+      </div>
+    `;
     return;
   }
 
-  recipeGrid.innerHTML = allRecipes.map(recipe => `
+  recipeGrid.innerHTML = filteredRecipes.map(recipe => `
     <div class="recipe-card" data-id="${recipe.id}">
       ${recipe.thumbnailUrl ? `
         <img class="recipe-card__thumbnail" src="${recipe.thumbnailUrl}" alt="${escapeHtml(recipe.title)}" loading="lazy" onerror="this.style.display='none'">
@@ -58,6 +122,7 @@ function renderRecipeList() {
         <div class="recipe-card__emoji">${getCategoryEmoji(recipe.category)}</div>
       `}
       <div class="recipe-card__title">${escapeHtml(recipe.title)}</div>
+      <div class="recipe-card__category">${getCategoryLabel(recipe.category)}</div>
     </div>
   `).join('');
 
@@ -71,6 +136,19 @@ function renderRecipeList() {
       }
     });
   });
+}
+
+/**
+ * カテゴリラベルを取得
+ */
+function getCategoryLabel(category) {
+  const labels = {
+    sweets: '🍰 スイーツ',
+    camp: '🏕️ キャンプ',
+    daily: '🍳 日常',
+    other: '📦 その他'
+  };
+  return labels[category] || '';
 }
 
 /**
