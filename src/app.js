@@ -181,17 +181,38 @@ function renderStep(recipe, index) {
   const step = steps[index];
   if (!step) return '';
 
+  // YouTube埋め込みプレーヤー用のHTML
+  const videoId = extractVideoId(recipe.sourceUrl);
+  const startSeconds = step.timestamp ? parseTimestamp(step.timestamp) : 0;
+
+  const videoEmbed = videoId ? `
+    <div class="step-card__video">
+      <iframe 
+        src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&rel=0"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  ` : '';
+
   return `
+    ${videoEmbed}
     <div class="step-card__content">
       <p class="step-card__description">${escapeHtml(step.description)}</p>
       ${step.tips ? `<p class="step-card__tips">💡 ${escapeHtml(step.tips)}</p>` : ''}
-      ${step.timestamp && recipe.sourceUrl ? `
-        <a class="step-card__timestamp" href="${recipe.sourceUrl}&t=${parseTimestamp(step.timestamp)}" target="_blank">
-          ▶️ ${step.timestamp} で再生
-        </a>
-      ` : ''}
+      ${step.timestamp ? `<span class="step-card__time">🕐 ${step.timestamp}</span>` : ''}
     </div>
   `;
+}
+
+/**
+ * YouTube URLからビデオIDを抽出
+ */
+function extractVideoId(url) {
+  if (!url) return null;
+  const match = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?]+)/);
+  return match ? match[1] : null;
 }
 
 /**

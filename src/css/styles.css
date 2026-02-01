@@ -537,6 +537,26 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+.step-card__video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: var(--space-md);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+}
+
+.step-card__video iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.step-card__time {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
 .step-card__content {
   width: 100%;
   display: flex;
