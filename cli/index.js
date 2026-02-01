@@ -92,20 +92,27 @@ async function fetchSubtitles(videoId) {
 }
 
 /**
- * VTTファイルをプレーンテキストに変換
+ * VTTファイルをタイムスタンプ付きテキストに変換
  */
 function parseVTT(vttContent) {
     const lines = vttContent.split('\n');
-    const textLines = [];
+    const segments = [];
     const seen = new Set();
+    let currentTime = null;
 
     for (const line of lines) {
-        // タイムスタンプ行やメタデータをスキップ
+        // メタデータをスキップ
         if (line.startsWith('WEBVTT') ||
             line.startsWith('Kind:') ||
             line.startsWith('Language:') ||
-            line.includes('-->') ||
             line.trim() === '') {
+            continue;
+        }
+
+        // タイムスタンプ行からタイムスタンプを抽出
+        const timeMatch = line.match(/(\d{2}:\d{2}:\d{2}\.\d{3}|\d{2}:\d{2}\.\d{3})\s*-->/);
+        if (timeMatch) {
+            currentTime = formatTimestamp(timeMatch[1]);
             continue;
         }
 
@@ -115,11 +122,35 @@ function parseVTT(vttContent) {
         // 空行や重複を除去
         if (text && !seen.has(text)) {
             seen.add(text);
-            textLines.push(text);
+            if (currentTime) {
+                segments.push(`[${currentTime}] ${text}`);
+            } else {
+                segments.push(text);
+            }
         }
     }
 
-    return textLines.join(' ');
+    return segments.join('\n');
+}
+
+/**
+ * VTTタイムスタンプを "MM:SS" 形式にフォーマット
+ */
+function formatTimestamp(ts) {
+    const parts = ts.split(':');
+    if (parts.length === 3) {
+        // HH:MM:SS.mmm
+        const hours = parseInt(parts[0]);
+        const mins = parseInt(parts[1]);
+        const secs = Math.floor(parseFloat(parts[2]));
+        const totalMins = hours * 60 + mins;
+        return `${totalMins}:${secs.toString().padStart(2, '0')}`;
+    } else {
+        // MM:SS.mmm
+        const mins = parseInt(parts[0]);
+        const secs = Math.floor(parseFloat(parts[1]));
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
 }
 
 /**
@@ -131,9 +162,14 @@ async function extractRecipeWithGemini(text, sourceUrl, config) {
     const prompt = `
 あなたはレシピ構造化の専門家です。以下のYouTube動画の字幕テキストからレシピ情報を抽出し、JSON形式で出力してください。
 
+## 重要: タイムスタンプについて
+- 入力テキストには [MM:SS] 形式のタイムスタンプが含まれています
+- 各手順（step）に該当する開始時間のタイムスタンプを "timestamp" フィールドに設定してください
+- タイムスタンプは "M:SS" または "MM:SS" 形式で出力してください
+
 ## 抽出ルール
 1. 材料は name, amount, unit に分解
-2. 手順は order, description, tips に分解
+2. 手順は order, description, timestamp, tips に分解
 3. 不明な情報は空文字列 "" とする
 4. カテゴリは以下から選択: sweets, camp, daily, other
 5. 話し言葉を読みやすい文章に整形すること
@@ -153,13 +189,14 @@ async function extractRecipeWithGemini(text, sourceUrl, config) {
     {
       "order": 1,
       "description": "手順の説明",
+      "timestamp": "1:23",
       "tips": "ポイント"
     }
   ],
   "notes": "全体的なコツやメモ"
 }
 
-## 入力テキスト（YouTube字幕）:
+## 入力テキスト（YouTube字幕 + タイムスタンプ）:
 ${text}
 `;
 
