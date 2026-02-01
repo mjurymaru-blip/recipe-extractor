@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#ff6b35">
   <meta name="description" content="YouTubeレシピ動画から調理手順を抽出し、ステップカード形式で表示">
-  
+
   <title>レシピノート</title>
-  
+
   <link rel="stylesheet" href="/src/css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <div id="app">
     <!-- Header -->
@@ -27,12 +29,7 @@
       <section class="input-section">
         <div class="input-group">
           <label class="input-label" for="urlInput">🔗 YouTube URL</label>
-          <input 
-            type="url" 
-            id="urlInput" 
-            class="input-field" 
-            placeholder="https://www.youtube.com/watch?v=..."
-          >
+          <input type="url" id="urlInput" class="input-field" placeholder="https://www.youtube.com/watch?v=...">
         </div>
 
         <div class="input-divider">
@@ -41,12 +38,8 @@
 
         <div class="input-group">
           <label class="input-label" for="textInput">📝 テキストを貼り付け</label>
-          <textarea 
-            id="textInput" 
-            class="input-field input-field--textarea" 
-            placeholder="動画の字幕や概要欄のテキストを貼り付け..."
-            rows="4"
-          ></textarea>
+          <textarea id="textInput" class="input-field input-field--textarea" placeholder="動画の字幕や概要欄のテキストを貼り付け..."
+            rows="4"></textarea>
         </div>
 
         <button class="btn btn--primary" id="extractBtn">
@@ -78,13 +71,13 @@
         <div class="modal__body">
           <div class="input-group">
             <label class="input-label" for="apiKeyInput">🔑 Gemini API キー</label>
-            <input 
-              type="password" 
-              id="apiKeyInput" 
-              class="input-field" 
-              placeholder="APIキーを入力..."
-            >
-            <p class="input-hint">APIキーはブラウザに保存されます</p>
+            <input type="password" id="apiKeyInput" class="input-field" placeholder="APIキーを入力...">
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="modelSelect">🤖 モデル</label>
+            <input type="text" id="modelSelect" class="input-field" placeholder="例: gemini-2.0-flash-001"
+              value="gemini-2.0-flash-001">
+            <p class="input-hint">利用可能なモデル名を入力してください</p>
           </div>
           <button class="btn btn--primary" id="saveApiKeyBtn">保存</button>
         </div>
@@ -94,4 +87,5 @@
 
   <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>

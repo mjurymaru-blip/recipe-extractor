@@ -1,9 +1,10 @@
 /**
  * 設定管理モジュール
- * APIキーの保存・読み込み
+ * APIキー・モデル設定の保存・読み込み
  */
 
 const STORAGE_KEY = 'recipe_note_settings';
+const DEFAULT_MODEL = 'gemini-2.0-flash-001';
 
 /**
  * 設定を取得
@@ -11,9 +12,9 @@ const STORAGE_KEY = 'recipe_note_settings';
 export function getSettings() {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
-        return stored ? JSON.parse(stored) : { apiKey: '' };
+        return stored ? JSON.parse(stored) : { apiKey: '', model: DEFAULT_MODEL };
     } catch {
-        return { apiKey: '' };
+        return { apiKey: '', model: DEFAULT_MODEL };
     }
 }
 
@@ -32,11 +33,27 @@ export function getApiKey() {
 }
 
 /**
+ * モデル名を取得
+ */
+export function getModel() {
+    return getSettings().model || DEFAULT_MODEL;
+}
+
+/**
  * APIキーを保存
  */
 export function saveApiKey(apiKey) {
     const settings = getSettings();
     settings.apiKey = apiKey;
+    saveSettings(settings);
+}
+
+/**
+ * モデルを保存
+ */
+export function saveModel(model) {
+    const settings = getSettings();
+    settings.model = model;
     saveSettings(settings);
 }
 
@@ -55,12 +72,15 @@ export function initSettings() {
     const settingsModal = document.getElementById('settingsModal');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const apiKeyInput = document.getElementById('apiKeyInput');
+    const modelSelect = document.getElementById('modelSelect');
     const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
     const backdrop = settingsModal?.querySelector('.modal__backdrop');
 
     // モーダルを開く
     settingsBtn?.addEventListener('click', () => {
-        apiKeyInput.value = getApiKey();
+        const settings = getSettings();
+        if (apiKeyInput) apiKeyInput.value = settings.apiKey || '';
+        if (modelSelect) modelSelect.value = settings.model || DEFAULT_MODEL;
         settingsModal?.classList.add('is-open');
     });
 
@@ -72,10 +92,16 @@ export function initSettings() {
     closeSettingsBtn?.addEventListener('click', closeModal);
     backdrop?.addEventListener('click', closeModal);
 
-    // APIキーを保存
+    // 設定を保存
     saveApiKeyBtn?.addEventListener('click', () => {
         const apiKey = apiKeyInput?.value?.trim() || '';
-        saveApiKey(apiKey);
+        const model = modelSelect?.value?.trim() || DEFAULT_MODEL;
+
+        const settings = getSettings();
+        settings.apiKey = apiKey;
+        settings.model = model;
+        saveSettings(settings);
+
         closeModal();
         showToast('設定を保存しました', 'success');
     });

@@ -9,22 +9,22 @@
   --color-bg-secondary: #1a1a2e;
   --color-bg-tertiary: #252542;
   --color-bg-card: #1e1e35;
-  
+
   /* Accent Colors */
   --color-accent-primary: #ff6b35;
   --color-accent-secondary: #ff8c5a;
   --color-accent-gradient: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-  
+
   /* Text Colors */
   --color-text-primary: #ffffff;
   --color-text-secondary: #a0a0b8;
   --color-text-muted: #6b6b80;
-  
+
   /* State Colors */
   --color-success: #4ade80;
   --color-warning: #fbbf24;
   --color-error: #f87171;
-  
+
   /* Spacing */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -32,20 +32,20 @@
   --space-lg: 1.5rem;
   --space-xl: 2rem;
   --space-2xl: 3rem;
-  
+
   /* Border Radius */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
   --radius-full: 9999px;
-  
+
   /* Shadows */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 20px rgba(255, 107, 53, 0.3);
-  
+
   /* Typography */
   --font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-size-xs: 0.75rem;
@@ -55,7 +55,7 @@
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 2rem;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
@@ -452,20 +452,176 @@ body {
   border-left: 3px solid var(--color-error);
 }
 
+/* ----- Step View ----- */
+.step-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.step-view__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.step-view__back {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.step-view__back:hover {
+  background: var(--color-bg-tertiary);
+}
+
+.step-view__title {
+  flex: 1;
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.step-view__progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.step-view__progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.step-view__progress-bar {
+  height: 6px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.step-view__progress-fill {
+  height: 100%;
+  background: var(--color-accent-gradient);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-base);
+}
+
+/* ----- Step Card ----- */
+.step-card {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+.step-card__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.step-card__description {
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+  color: var(--color-text-primary);
+}
+
+.step-card__tips {
+  padding: var(--space-md);
+  background: rgba(255, 107, 53, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--color-accent-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.step-card__timestamp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  width: fit-content;
+  transition: background var(--transition-fast);
+}
+
+.step-card__timestamp:hover {
+  background: var(--color-bg-card);
+}
+
+.step-card__empty {
+  color: var(--color-text-muted);
+}
+
+.step-view__nav {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.step-view__nav .btn {
+  flex: 1;
+}
+
+/* ----- Ingredients Section ----- */
+.ingredients-section {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.ingredients-section h3 {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.ingredients-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  list-style: none;
+}
+
+.ingredients-list li {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  padding: var(--space-xs) 0;
+}
+
 /* ----- Responsive ----- */
 @media (max-width: 480px) {
   .header {
     padding: var(--space-sm) var(--space-md);
   }
-  
+
   .main {
     padding: var(--space-md);
   }
-  
+
   .input-section {
     padding: var(--space-md);
   }
-  
+
   .recipe-grid {
     grid-template-columns: repeat(2, 1fr);
   }
