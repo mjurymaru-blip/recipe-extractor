@@ -52,7 +52,11 @@ function renderRecipeList() {
 
   recipeGrid.innerHTML = allRecipes.map(recipe => `
     <div class="recipe-card" data-id="${recipe.id}">
-      <div class="recipe-card__emoji">${getCategoryEmoji(recipe.category)}</div>
+      ${recipe.thumbnailUrl ? `
+        <img class="recipe-card__thumbnail" src="${recipe.thumbnailUrl}" alt="${escapeHtml(recipe.title)}" loading="lazy" onerror="this.style.display='none'">
+      ` : `
+        <div class="recipe-card__emoji">${getCategoryEmoji(recipe.category)}</div>
+      `}
       <div class="recipe-card__title">${escapeHtml(recipe.title)}</div>
     </div>
   `).join('');

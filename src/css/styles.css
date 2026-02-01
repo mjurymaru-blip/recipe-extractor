@@ -314,6 +314,14 @@ body {
   margin-bottom: var(--space-sm);
 }
 
+.recipe-card__thumbnail {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-sm);
+}
+
 .recipe-card__title {
   font-size: var(--font-size-sm);
   font-weight: 500;
