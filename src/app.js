@@ -123,11 +123,27 @@ function renderRecipeList() {
       `}
       <div class="recipe-card__title">${escapeHtml(recipe.title)}</div>
       <div class="recipe-card__category">${getCategoryLabel(recipe.category)}</div>
+      ${renderTags(recipe.tags)}
     </div>
   `).join('');
 
   // カードクリックイベント
   recipeGrid.querySelectorAll('.recipe-card[data-id]').forEach(card => {
+    // タグクリック（検索連動）
+    card.querySelectorAll('.tag-pill').forEach(tag => {
+      tag.addEventListener('click', (e) => {
+        e.stopPropagation(); // 詳細画面への遷移を阻止
+        const tagText = e.target.textContent;
+        // 検索バーにセットして発火
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+          searchInput.value = tagText;
+          searchInput.dispatchEvent(new Event('input'));
+        }
+      });
+    });
+
+    // カード本体クリック（詳細へ）
     card.addEventListener('click', () => {
       const id = card.dataset.id;
       const recipe = allRecipes.find(r => r.id === id);
@@ -138,17 +154,19 @@ function renderRecipeList() {
   });
 }
 
-/**
- * カテゴリラベルを取得
- */
+
 function getCategoryLabel(category) {
   const labels = {
+    japanese: '🍱 和食',
+    western: '🍝 洋食',
+    chinese: '🥟 中華',
+    asian: '🍜 アジアン',
     sweets: '🍰 スイーツ',
+    bread: '🍞 パン',
     camp: '🏕️ キャンプ',
-    daily: '🍳 日常',
     other: '📦 その他'
   };
-  return labels[category] || '';
+  return labels[category] || category;
 }
 
 /**
@@ -171,12 +189,37 @@ function showEmptyState() {
  */
 function getCategoryEmoji(category) {
   const emojis = {
+    japanese: '🍱',
+    western: '🍝',
+    chinese: '🥟',
+    asian: '🍜',
     sweets: '🍰',
+    bread: '🍞',
     camp: '🏕️',
-    daily: '🍳',
     other: '📝'
   };
   return emojis[category] || '📝';
+}
+
+/**
+ * タグを描画（最大3つ表示、残りは+N）
+ */
+function renderTags(tags) {
+  if (!tags || !Array.isArray(tags) || tags.length === 0) return '';
+
+  const MAX_TAGS = 3;
+  const displayTags = tags.slice(0, MAX_TAGS);
+  const remaining = tags.length - MAX_TAGS;
+
+  let html = '<div class="recipe-card__tags">';
+  html += displayTags.map(tag => `<span class="tag-pill">${escapeHtml(tag)}</span>`).join('');
+
+  if (remaining > 0) {
+    html += `<span class="tag-pill tag-pill--more">+${remaining}</span>`;
+  }
+
+  html += '</div>';
+  return html;
 }
 
 /**

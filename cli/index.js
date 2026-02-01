@@ -171,14 +171,20 @@ async function extractRecipeWithGemini(text, sourceUrl, config) {
 1. 材料は name, amount, unit に分解
 2. 手順は order, description, timestamp, tips に分解
 3. 不明な情報は空文字列 "" とする
-4. カテゴリは以下から選択: sweets, camp, daily, other
-5. 話し言葉を読みやすい文章に整形すること
+4. カテゴリは以下から選択:
+   - japanese (和食), western (洋食), chinese (中華), asian (アジアン)
+   - sweets (スイーツ), bread (パン), camp (キャンプ), other (その他)
+5. タグは以下の観点で複数抽出する:
+   - 主材料: 肉, 鶏肉, 豚肉, 牛肉, 魚介, 野災, 卵, 豆腐, 米, 小麦粉, チョコレート, 生クリーム, 果物, チーズ...
+   - 料理形態: カレー, パスタ, 麺類, 鍋, 丼, サラダ, スープ, 揚げ物, 焼き物, 煮物...
+   - 特徴: 簡単, 時短, 作り置き, おもてなし, ヘルシー...
+6. 話し言葉を読みやすい文章に整形すること
 
 ## 出力形式（JSONのみ出力、説明不要）
 {
   "title": "レシピタイトル",
-  "category": "sweets",
-  "tags": ["タグ1", "タグ2"],
+  "category": "japanese",
+  "tags": ["豚肉", "玉ねぎ", "生姜焼き", "簡単"],
   "servings": "2人分",
   "prepTime": "10分",
   "cookTime": "30分",
