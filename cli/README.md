@@ -34,13 +34,17 @@ YouTubeから「Too Many Requests」エラーが返される場合、`cookies.tx
 
 ### cookies.txt の作成方法
 
-1. **ブラウザがある別のPCで**、[Get cookies.txt LOCALLY](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) などの拡張機能をインストール
+**ブラウザがある別のPC**で以下を実行：
 
-2. YouTubeにログインした状態で、拡張機能から「Export cookies」
+```bash
+# Chrome の場合
+yt-dlp --cookies-from-browser chrome --cookies cookies.txt --skip-download "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
-3. ダウンロードした `cookies.txt` を `cli/cookies.txt` に配置
+# Firefox の場合
+yt-dlp --cookies-from-browser firefox --cookies cookies.txt --skip-download "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
 
-4. 再度CLIを実行
+生成された `cookies.txt` をCLI環境の `cli/cookies.txt` にコピー。
 
 ```bash
 node index.js https://www.youtube.com/watch?v=VIDEO_ID
