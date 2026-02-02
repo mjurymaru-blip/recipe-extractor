@@ -3,6 +3,7 @@
  */
 
 import { showToast } from './settings.js';
+import { getCategoryLabel, getCategoryEmoji, CATEGORIES, CATEGORY_ORDER } from './constants.js';
 
 // 現在表示中のレシピ
 let currentRecipe = null;
@@ -155,20 +156,6 @@ function renderRecipeList() {
 }
 
 
-function getCategoryLabel(category) {
-  const labels = {
-    japanese: '🍱 和食',
-    western: '🍝 洋食',
-    chinese: '🥟 中華',
-    asian: '🍜 アジアン',
-    sweets: '🍰 スイーツ',
-    bread: '🍞 パン',
-    camp: '🏕️ キャンプ',
-    other: '📦 その他'
-  };
-  return labels[category] || category;
-}
-
 /**
  * 空の状態を表示
  */
@@ -182,23 +169,6 @@ function showEmptyState() {
       </div>
     `;
   }
-}
-
-/**
- * カテゴリに応じた絵文字を取得
- */
-function getCategoryEmoji(category) {
-  const emojis = {
-    japanese: '🍱',
-    western: '🍝',
-    chinese: '🥟',
-    asian: '🍜',
-    sweets: '🍰',
-    bread: '🍞',
-    camp: '🏕️',
-    other: '📝'
-  };
-  return emojis[category] || '📝';
 }
 
 /**
@@ -242,6 +212,10 @@ function showStepView(recipe) {
   const main = document.querySelector('.main');
   if (!main) return;
 
+  const videoId = extractVideoId(recipe.sourceUrl);
+  const firstStep = recipe.steps?.[0];
+  const startSeconds = firstStep?.timestamp ? parseTimestamp(firstStep.timestamp) : 0;
+
   main.innerHTML = `
     <div class="step-view">
       <header class="step-view__header">
@@ -257,6 +231,23 @@ function showStepView(recipe) {
           <div class="step-view__progress-fill" id="progressFill" style="width: ${100 / (recipe.steps?.length || 1)}%"></div>
         </div>
       </div>
+
+      ${videoId ? `
+        <div class="video-player" id="videoPlayer">
+          <button class="video-player__toggle" id="videoToggle">
+            <span id="videoToggleIcon">📺</span> 動画を表示
+          </button>
+          <div class="video-player__container" id="videoContainer" style="display: none;">
+            <iframe 
+              id="videoIframe"
+              src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&rel=0&enablejsapi=1"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      ` : ''}
 
       <div class="step-card" id="stepCard">
         ${renderStep(recipe, 0)}
@@ -288,10 +279,22 @@ function showStepView(recipe) {
   document.getElementById('backBtn')?.addEventListener('click', showHomeView);
   document.getElementById('prevBtn')?.addEventListener('click', () => navigateStep(-1));
   document.getElementById('nextBtn')?.addEventListener('click', () => navigateStep(1));
+
+  // 動画折りたたみトグル
+  const videoToggle = document.getElementById('videoToggle');
+  const videoContainer = document.getElementById('videoContainer');
+  const toggleIcon = document.getElementById('videoToggleIcon');
+
+  videoToggle?.addEventListener('click', () => {
+    const isHidden = videoContainer.style.display === 'none';
+    videoContainer.style.display = isHidden ? 'block' : 'none';
+    toggleIcon.textContent = isHidden ? '📺' : '📺';
+    videoToggle.childNodes[1].textContent = isHidden ? ' 動画を隠す' : ' 動画を表示';
+  });
 }
 
 /**
- * ステップをレンダリング
+ * ステップをレンダリング（テキストのみ、動画は別管理）
  */
 function renderStep(recipe, index) {
   const steps = recipe.steps || [];
@@ -302,23 +305,7 @@ function renderStep(recipe, index) {
   const step = steps[index];
   if (!step) return '';
 
-  // YouTube埋め込みプレーヤー用のHTML
-  const videoId = extractVideoId(recipe.sourceUrl);
-  const startSeconds = step.timestamp ? parseTimestamp(step.timestamp) : 0;
-
-  const videoEmbed = videoId ? `
-    <div class="step-card__video">
-      <iframe 
-        src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&rel=0"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-  ` : '';
-
   return `
-    ${videoEmbed}
     <div class="step-card__content">
       <p class="step-card__description">${escapeHtml(step.description)}</p>
       ${step.tips ? `<p class="step-card__tips">💡 ${escapeHtml(step.tips)}</p>` : ''}
@@ -381,6 +368,17 @@ function navigateStep(direction) {
   }
   if (nextBtn) {
     nextBtn.textContent = currentStepIndex === totalSteps - 1 ? '完了 ✓' : '次へ ▶';
+  }
+
+  // 動画プレイヤーのタイムスタンプを更新（リロードなし）
+  const videoIframe = document.getElementById('videoIframe');
+  if (videoIframe) {
+    const step = currentRecipe.steps[currentStepIndex];
+    const startSeconds = step?.timestamp ? parseTimestamp(step.timestamp) : 0;
+    const videoId = extractVideoId(currentRecipe.sourceUrl);
+    if (videoId) {
+      videoIframe.src = `https://www.youtube.com/embed/${videoId}?start=${startSeconds}&rel=0&enablejsapi=1`;
+    }
   }
 }
 
