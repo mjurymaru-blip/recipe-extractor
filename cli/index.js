@@ -44,6 +44,7 @@ async function fetchSubtitles(videoId) {
     return new Promise((resolve, reject) => {
         const url = `https://www.youtube.com/watch?v=${videoId}`;
         const args = [
+            '--cookies-from-browser', 'firefox',  // レート制限回避
             '--write-auto-sub',
             '--sub-lang', 'ja',
             '--skip-download',
