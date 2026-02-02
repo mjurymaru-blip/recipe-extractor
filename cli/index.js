@@ -40,11 +40,11 @@ function extractVideoId(url) {
 async function fetchSubtitles(videoId) {
     const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'recipe-'));
     const outputPath = path.join(tempDir, 'sub');
+    const cookiesPath = path.join(__dirname, 'cookies.txt');
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const url = `https://www.youtube.com/watch?v=${videoId}`;
         const args = [
-            '--cookies-from-browser', 'firefox',  // レート制限回避
             '--write-auto-sub',
             '--sub-lang', 'ja',
             '--skip-download',
@@ -52,6 +52,15 @@ async function fetchSubtitles(videoId) {
             '-o', outputPath,
             url
         ];
+
+        // cookies.txtがあれば使用（レート制限回避）
+        try {
+            await fs.access(cookiesPath);
+            args.unshift('--cookies', cookiesPath);
+            console.log('  🍪 cookies.txt を使用');
+        } catch {
+            console.log('  ⚠️  cookies.txt がありません（429エラー時は作成してください）');
+        }
 
         console.log('  🔧 yt-dlp 実行中...');
 

@@ -15,6 +15,7 @@ out/
 
 # CLI config (contains API key)
 cli/config.json
+cli/cookies.txt
 
 # IDE / Editor
 .vscode/
