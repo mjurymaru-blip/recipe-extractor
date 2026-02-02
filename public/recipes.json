@@ -1,6 +1,303 @@
 {
   "recipes": [
     {
+      "title": "【伝説の唐揚げ】お店レベルのジューシー＆サクサク唐揚げの作り方",
+      "category": "japanese",
+      "tags": [
+        "鶏肉",
+        "唐揚げ",
+        "揚げ物",
+        "簡単",
+        "ジューシー"
+      ],
+      "servings": "",
+      "prepTime": "",
+      "cookTime": "",
+      "ingredients": [
+        {
+          "name": "鶏もも肉",
+          "amount": "1",
+          "unit": "枚 (約300g)"
+        },
+        {
+          "name": "酒",
+          "amount": "大さじ2",
+          "unit": ""
+        },
+        {
+          "name": "醤油",
+          "amount": "大さじ2",
+          "unit": ""
+        },
+        {
+          "name": "おろしニンニク",
+          "amount": "小さじ1/2",
+          "unit": ""
+        },
+        {
+          "name": "おろし生姜",
+          "amount": "小さじ1/2",
+          "unit": ""
+        },
+        {
+          "name": "片栗粉",
+          "amount": "大さじ1",
+          "unit": ""
+        },
+        {
+          "name": "薄力粉",
+          "amount": "大さじ1",
+          "unit": ""
+        },
+        {
+          "name": "片栗粉 (二度揚げ用)",
+          "amount": "適量",
+          "unit": ""
+        }
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "description": "ボウルに鶏もも肉、酒、醤油、おろしニンニク、おろし生姜を入れてよく揉み込み、下味をつける。",
+          "timestamp": "0:24",
+          "tips": "酒と醤油の水分を鶏肉にしっかり吸わせることでジューシーに仕上がります。鶏肉が茶色くなるまで揉み込んでください。"
+        },
+        {
+          "order": 2,
+          "description": "鶏もも肉の余分な皮や脂肪を取り除く。",
+          "timestamp": "1:15",
+          "tips": "取り除くことで肉の臭みが取れ、口当たりが良くなります。時間がない場合は省略可能です。"
+        },
+        {
+          "order": 3,
+          "description": "鶏もも肉を一口大（1切れ50〜60g程度）に切る。縦半分に切ってからそれぞれ3等分にすると均一な大きさにしやすい。",
+          "timestamp": "2:20",
+          "tips": "大きさを揃えることで、揚げムラを防ぎ、パサつきや焦げ付きを防ぎます。"
+        },
+        {
+          "order": 4,
+          "description": "下味をつけた鶏肉に、片栗粉と薄力粉を加えて全体に絡める。",
+          "timestamp": "5:51",
+          "tips": "鶏肉のねっとり感がなくなり、表面がサラサラになるまでしっかり粉を揉み込みます。粉が足りない場合は追加してください。"
+        },
+        {
+          "order": 5,
+          "description": "フライパンにサラダ油を深さ2cmほど入れて中火で熱し、170℃に温める。",
+          "timestamp": "7:05",
+          "tips": "強火で一気に温めず、ゆっくり温めるのがポイントです。"
+        },
+        {
+          "order": 6,
+          "description": "鶏肉に二度目の衣として片栗粉をまぶす。",
+          "timestamp": "7:52",
+          "tips": "よりサクッと揚げるためのポイントです。時間がない場合は省略可能です。余分な粉は軽く叩いて落とします。"
+        },
+        {
+          "order": 7,
+          "description": "170℃の油で鶏肉を揚げる。入れたら1分ほど動かさず、表面が固まったらひっくり返す。",
+          "timestamp": "9:40",
+          "tips": "衣が剥がれないように、最初は動かさないのが重要です。"
+        },
+        {
+          "order": 8,
+          "description": "時々ひっくり返しながら、3〜4分ほど揚げ色がつくまで揚げる。",
+          "timestamp": "10:35",
+          "tips": "最初は時間を計って揚げると失敗しにくいです。"
+        },
+        {
+          "order": 9,
+          "description": "一度油から取り出し、5分ほど休ませる。",
+          "timestamp": "12:46",
+          "tips": "余熱で中までじっくり火を通し、ジューシーに仕上げます。揚げ続けすぎると水分が飛んでしまうためです。"
+        },
+        {
+          "order": 10,
+          "description": "油の温度を180℃に上げ、二度揚げする。",
+          "timestamp": "13:29",
+          "tips": "二度揚げすることで衣をカリッと仕上げます。"
+        },
+        {
+          "order": 11,
+          "description": "180℃の油で30秒ほど揚げ、ひっくり返してさらに揚げる。",
+          "timestamp": "14:01",
+          "tips": "泡が小さくなってきたら揚がりのサインです。"
+        },
+        {
+          "order": 12,
+          "description": "周りがカリッとしてきたら油から取り出す。",
+          "timestamp": "14:52",
+          "tips": ""
+        }
+      ],
+      "notes": "鶏肉の大きさを揃える、下味をしっかり揉み込む、二度揚げする、この3つがジューシーに上げるポイントです。油を切る際は、網やキッチンペーパーを使用するか、魚焼きグリルを活用すると便利です。",
+      "id": "recipe_1770039583947",
+      "sourceUrl": "https://www.youtube.com/watch?v=1IeqblkYSkY",
+      "sourceType": "youtube",
+      "thumbnailUrl": "https://img.youtube.com/vi/1IeqblkYSkY/maxresdefault.jpg",
+      "createdAt": "2026-02-02T13:39:43.947Z",
+      "updatedAt": "2026-02-02T13:39:43.947Z"
+    },
+    {
+      "title": "【親子丼】ふわふわトロトロ！鶏肉プリプリ！失敗しない親子丼の作り方",
+      "category": "japanese",
+      "tags": [
+        "鶏肉",
+        "玉ねぎ",
+        "卵",
+        "親子丼",
+        "簡単",
+        "フライパン"
+      ],
+      "servings": "1人分",
+      "prepTime": "",
+      "cookTime": "",
+      "ingredients": [
+        {
+          "name": "鶏肉",
+          "amount": "1/2",
+          "unit": "枚"
+        },
+        {
+          "name": "玉ねぎ",
+          "amount": "1/4",
+          "unit": "個"
+        },
+        {
+          "name": "卵",
+          "amount": "2",
+          "unit": "個"
+        },
+        {
+          "name": "三つ葉",
+          "amount": "",
+          "unit": ""
+        },
+        {
+          "name": "ご飯",
+          "amount": "200",
+          "unit": "g"
+        },
+        {
+          "name": "みりん",
+          "amount": "大さじ1",
+          "unit": ""
+        },
+        {
+          "name": "料理酒",
+          "amount": "大さじ1",
+          "unit": ""
+        },
+        {
+          "name": "醤油",
+          "amount": "大さじ1",
+          "unit": ""
+        },
+        {
+          "name": "砂糖",
+          "amount": "小さじ1",
+          "unit": ""
+        },
+        {
+          "name": "水",
+          "amount": "50",
+          "unit": "ml"
+        }
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "description": "玉ねぎを3mm幅の薄切りにする。",
+          "timestamp": "0:15",
+          "tips": "玉ねぎの厚さによって煮込み時間が変わるので、この厚さを目安にしてください。"
+        },
+        {
+          "order": 2,
+          "description": "鶏肉は余分な皮や脂肪を取り除き、一口大に切る。大きすぎず小さすぎない、口に入るサイズに切るのがポイント。",
+          "timestamp": "0:29",
+          "tips": "鶏肉を小さく切りすぎると火が入りすぎてパサパサになるので注意。"
+        },
+        {
+          "order": 3,
+          "description": "調味料（みりん、料理酒、醤油、砂糖）を混ぜ合わせ、砂糖を溶かす。",
+          "timestamp": "3:55",
+          "tips": "みりん、料理酒、醤油は1:1:1の黄金比。"
+        },
+        {
+          "order": 4,
+          "description": "フライパンに水と混ぜ合わせた調味料を入れ、軽く混ぜる。",
+          "timestamp": "4:42",
+          "tips": "煮汁が少ないと感じる場合は水を加える。"
+        },
+        {
+          "order": 5,
+          "description": "冷たいフライパンに鶏肉と玉ねぎを入れ、全体に均一に広げる。",
+          "timestamp": "3:01",
+          "tips": "フライパンが冷たい状態から加熱することで、鶏肉がゆっくりと温まり、ふわっとジューシーに仕上がる。"
+        },
+        {
+          "order": 6,
+          "description": "鶏肉と玉ねぎの上に調味料と水を加えた煮汁をかける。",
+          "timestamp": "4:52",
+          "tips": ""
+        },
+        {
+          "order": 7,
+          "description": "火にかけ、煮立ったら蓋をせずにそのまま加熱する。",
+          "timestamp": "5:37",
+          "tips": "蓋をすると温度が上がりすぎて鶏肉に火が入りすぎてしまうため、蓋をせずにゆっくり加熱する。"
+        },
+        {
+          "order": 8,
+          "description": "煮立ったら蓋をして弱火にし、5分間煮る。",
+          "timestamp": "6:02",
+          "tips": "弱火にしないと鶏肉に火が入りすぎてしまうので注意。"
+        },
+        {
+          "order": 9,
+          "description": "ボウルに卵を割り入れ、白身を切るように軽くほぐす。",
+          "timestamp": "6:45",
+          "tips": "白身が残りすぎると、黄身と白身がはっきり分かれてしまい、煮汁がまとまりにくくなるため、白身を軽く切るように混ぜる。"
+        },
+        {
+          "order": 10,
+          "description": "煮込み終わった鶏肉の上に、溶き卵の約3分の2を回し入れる。",
+          "timestamp": "9:10",
+          "tips": "卵は一度に全部入れず、2回に分けて入れるのが失敗しないポイント。"
+        },
+        {
+          "order": 11,
+          "description": "蓋をして中火で1分加熱する。",
+          "timestamp": "10:43",
+          "tips": "卵に火を通し、ふわふわトロトロに仕上げる。"
+        },
+        {
+          "order": 12,
+          "description": "残りの溶き卵を回し入れ、蓋をしてさらに1分加熱する。",
+          "timestamp": "10:43",
+          "tips": "2回目に卵を入れることで、ふわふわトロトロに仕上がる。"
+        },
+        {
+          "order": 13,
+          "description": "丼にご飯を盛り、その上に親子丼を乗せる。",
+          "timestamp": "11:10",
+          "tips": ""
+        },
+        {
+          "order": 14,
+          "description": "三つ葉を飾る。",
+          "timestamp": "12:28",
+          "tips": "三つ葉は煮すぎると色が悪くなるので、最後に乗せるだけでOK。"
+        }
+      ],
+      "notes": "鶏肉は小さく切りすぎず、フライパンは冷たい状態から加熱するのが、ふわふわでプリプリな親子丼を作るためのポイントです。卵は2回に分けて入れることで、トロトロの食感に仕上がります。",
+      "id": "recipe_1770039269432",
+      "sourceUrl": "https://www.youtube.com/watch?v=5d-r8rLTr00",
+      "sourceType": "youtube",
+      "thumbnailUrl": "https://img.youtube.com/vi/5d-r8rLTr00/maxresdefault.jpg",
+      "createdAt": "2026-02-02T13:34:29.432Z",
+      "updatedAt": "2026-02-02T13:34:29.432Z"
+    },
+    {
       "title": "簡単！本格チョコショートケーキ",
       "category": "sweets",
       "tags": [
@@ -952,24 +1249,7 @@
       "thumbnailUrl": "https://img.youtube.com/vi/QMjRLpdON4E/maxresdefault.jpg",
       "createdAt": "2026-02-01T10:07:40.110Z",
       "updatedAt": "2026-02-01T10:07:40.110Z"
-    },
-    {
-      "title": "",
-      "category": "other",
-      "tags": [],
-      "servings": "",
-      "prepTime": "",
-      "cookTime": "",
-      "ingredients": [],
-      "steps": [],
-      "notes": "",
-      "id": "recipe_1769939920627",
-      "sourceUrl": "https://www.youtube.com/watch?v=QMjRLpdON4E",
-      "sourceType": "youtube",
-      "thumbnailUrl": "https://img.youtube.com/vi/QMjRLpdON4E/maxresdefault.jpg",
-      "createdAt": "2026-02-01T09:58:40.627Z",
-      "updatedAt": "2026-02-01T09:58:40.628Z"
     }
   ],
-  "updatedAt": "2026-02-02T13:03:39.241Z"
+  "updatedAt": "2026-02-02T13:39:43.948Z"
 }

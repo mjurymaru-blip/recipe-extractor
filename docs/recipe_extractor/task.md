@@ -49,9 +49,9 @@
 - [x] **Refactor**: カテゴリ定義の一元化
 
 ## Phase 6: オフライン & 配信
-- [ ] Service Workerによるオフライン対応
-- [ ] PWAインストール対応
-- [ ] GitHub Pagesへの静的デプロイ
+- [x] Service Workerによるオフライン対応
+- [x] PWAインストール対応
+- [/] GitHub Pagesへの静的デプロイ
 - [ ] スマホでの動作確認
 
 ## 将来拡張（Phase 7以降）
