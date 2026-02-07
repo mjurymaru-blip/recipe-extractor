@@ -50,7 +50,7 @@ export async function initApp() {
  */
 async function loadRecipesFromJSON() {
   try {
-    const response = await fetch('/recipes.json');
+    const response = await fetch('./recipes.json');
     if (!response.ok) {
       throw new Error('レシピファイルが見つかりません');
     }
