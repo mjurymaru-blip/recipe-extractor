@@ -1,59 +1,79 @@
-# プロジェクトテンプレート
+# 📖 レシピノート
 
-AI駆動開発のためのプロジェクトテンプレートです。
+YouTubeの料理動画から自動字幕を取得し、レシピを構造化して表示するPWAアプリです。
 
-## 使い方
+## ✨ 特徴
 
-### 1. 新規プロジェクトの作成
+- 🎥 **YouTube字幕からレシピ抽出** - ナレーション付き動画から材料・手順を自動抽出
+- 📱 **PWA対応** - スマホにインストール可能、オフラインでも閲覧可能
+- 🏕️ **ステップ表示** - 調理中に見やすいカード形式の手順表示
+- 🔍 **検索・フィルター** - カテゴリ・タグで素早く検索
+- ⏱️ **タイムスタンプ連動** - 各ステップから動画の該当箇所にジャンプ
+
+## 🏗️ アーキテクチャ
+
+```
+┌─────────────────┐      ┌─────────────────┐
+│   CLI ツール    │ ───► │  recipes.json   │
+│  (レシピ生成)   │      │   (静的JSON)    │
+└─────────────────┘      └────────┬────────┘
+                                  │
+                         ┌────────▼────────┐
+                         │    PWA (閲覧)   │
+                         │  GitHub Pages   │
+                         └─────────────────┘
+```
+
+## 📦 セットアップ
+
+### PWA（閲覧アプリ）
 
 ```bash
-# テンプレートをクローン
-git clone ssh://git@192.168.1.203:30009/h.oota/project-template.git <プロジェクト名>
-cd <プロジェクト名>
-
-# Gitの履歴をリセット（新規プロジェクトとして開始）
-rm -rf .git
-git init
-git branch -m main
-
-# 新しいリモートを設定
-git remote add origin <GiteaのURL>
+npm install
+npm run dev      # 開発サーバー起動
+npm run build    # 本番ビルド
 ```
 
-### 2. Dual Remote設定（オプション）
-
-GitHub公開も予定している場合：
+### CLI（レシピ生成ツール）
 
 ```bash
-/setup-dual-remote
+cd cli
+npm install
+cp config.json.example config.json
+# config.json に Gemini API キーを設定
 ```
 
-## 含まれるファイル
+## 🎬 使い方
 
-```
-.agent/workflows/     # Antigravityワークフロー
-├── backup.md         # Giteaバックアップ
-├── export-context.md # AIレビュー用エクスポート
-├── publish.md        # GitHub公開
-├── review-feedback.md # レビュー結果取り込み
-└── setup-dual-remote.md # Dual Remote設定
+### レシピを追加
 
-docs/
-└── development_workflow.md  # 開発フロードキュメント
-
-.gitignore            # 標準的な除外設定
+```bash
+cd cli
+node index.js https://www.youtube.com/watch?v=VIDEO_ID
 ```
 
-## ワークフローコマンド
+※ ナレーション（音声説明）のある動画を使用してください。BGMのみの動画は対応していません。
 
-| コマンド | 説明 |
-|---------|------|
-| `/backup` | Giteaにバックアップ |
-| `/publish` | GitHubへスクッシュマージ公開 |
-| `/review-feedback` | 外部AIレビュー結果を取り込む |
-| `/export-context` | repomixでエクスポート |
-| `/setup-dual-remote` | Dual Remote設定 |
+### PWAで閲覧
 
-## 詳細
+```bash
+npm run dev
+# http://localhost:3000 でアクセス
+```
 
-開発フローの詳細は [docs/development_workflow.md](docs/development_workflow.md) を参照してください。
+## 📝 対応動画の条件
+
+- ✅ ナレーション（音声での説明）がある動画
+- ✅ 日本語の自動字幕が生成される動画
+- ❌ BGMのみでテロップ表示の動画
+- ❌ 外国語のみの動画
+
+## 🛠️ 技術スタック
+
+- **PWA**: Vite + vite-plugin-pwa
+- **CLI**: Node.js + yt-dlp + Gemini API
+- **ホスティング**: GitHub Pages
+
+## 📄 ライセンス
+
+MIT
