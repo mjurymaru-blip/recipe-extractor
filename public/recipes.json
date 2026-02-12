@@ -1,7 +1,7 @@
 {
   "recipes": [
     {
-      "title": "ふわふわスポンジのチョコレートケーキ",
+      "title": "バター不要、ふわふわスポンジのチョコレートケーキ",
       "category": "sweets",
       "tags": [
         "チョコレート",
@@ -17,48 +17,48 @@
       "ingredients": [
         {
           "name": "薄力粉",
-          "amount": "",
-          "unit": ""
+          "amount": "80",
+          "unit": "g"
         },
         {
-          "name": "チョコレート（スポンジ用）",
-          "amount": "",
-          "unit": ""
+          "name": "ビターチョコレート 67％（スポンジ用）",
+          "amount": "40",
+          "unit": "g"
         },
         {
           "name": "牛乳",
-          "amount": "",
-          "unit": ""
+          "amount": "50",
+          "unit": "g"
         },
         {
           "name": "卵白",
-          "amount": "",
-          "unit": ""
+          "amount": "2",
+          "unit": "個"
         },
         {
-          "name": "砂糖",
-          "amount": "",
-          "unit": ""
+          "name": "グラニュー糖",
+          "amount": "90",
+          "unit": "g"
         },
         {
           "name": "卵黄",
-          "amount": "",
-          "unit": ""
+          "amount": "2",
+          "unit": "個"
         },
         {
-          "name": "チョコレート（クリーム用）",
-          "amount": "",
-          "unit": ""
+          "name": "チョコレート67%（クリーム用）",
+          "amount": "140",
+          "unit": "g"
         },
         {
           "name": "水あめ",
-          "amount": "",
-          "unit": ""
+          "amount": "40",
+          "unit": "g"
         },
         {
           "name": "生クリーム",
-          "amount": "",
-          "unit": ""
+          "amount": "400",
+          "unit": "g"
         }
       ],
       "steps": [
