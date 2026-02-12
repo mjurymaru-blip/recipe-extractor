@@ -45,7 +45,8 @@ async function fetchSubtitles(videoId) {
     return new Promise(async (resolve, reject) => {
         const url = `https://www.youtube.com/watch?v=${videoId}`;
         const args = [
-            '--write-auto-sub',
+            '--write-sub',       // 手動字幕を優先取得
+            '--write-auto-sub',  // 手動字幕がなければ自動字幕
             '--sub-lang', 'ja',
             '--skip-download',
             '--sub-format', 'vtt',
