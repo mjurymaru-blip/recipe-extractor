@@ -165,6 +165,47 @@ function formatTimestamp(ts) {
 }
 
 /**
+ * 不完全なJSONの修復を試みる
+ * トークン上限で切れた場合に閉じ括弧や引用符を補完する
+ */
+function tryRepairJSON(text) {
+    try {
+        return JSON.parse(text);
+    } catch {
+        let repaired = text;
+
+        // 末尾の不完全なキー・値ペアを除去
+        repaired = repaired.replace(/,\s*"[^"]*"?\s*:\s*"[^"]*$/, '');
+        repaired = repaired.replace(/,\s*"[^"]*"?\s*:?\s*$/, '');
+        repaired = repaired.replace(/,\s*$/, '');
+
+        // スタックで必要な閉じ括弧を計算
+        const stack = [];
+        let inString = false;
+        let escaped = false;
+
+        for (const ch of repaired) {
+            if (escaped) { escaped = false; continue; }
+            if (ch === '\\' && inString) { escaped = true; continue; }
+            if (ch === '"') { inString = !inString; continue; }
+            if (inString) continue;
+            if (ch === '{') stack.push('}');
+            else if (ch === '[') stack.push(']');
+            else if (ch === '}' || ch === ']') stack.pop();
+        }
+
+        if (inString) repaired += '"';
+        while (stack.length > 0) repaired += stack.pop();
+
+        try {
+            return JSON.parse(repaired);
+        } catch {
+            return null;
+        }
+    }
+}
+
+/**
  * Gemini APIでレシピを抽出
  */
 async function extractRecipeWithGemini(text, sourceUrl, config) {
@@ -224,7 +265,7 @@ ${text}
             contents: [{ parts: [{ text: prompt }] }],
             generationConfig: {
                 temperature: 0.2,
-                maxOutputTokens: 4096,
+                maxOutputTokens: 8192,
                 responseMimeType: 'application/json'
             }
         })
@@ -236,13 +277,36 @@ ${text}
     }
 
     const data = await response.json();
+    const finishReason = data.candidates?.[0]?.finishReason;
+    if (finishReason === 'MAX_TOKENS') {
+        console.warn('  ⚠️  APIの出力がトークン上限で切れています...');
+    }
+
     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!responseText) {
         throw new Error('APIからの応答が空です');
     }
 
-    const recipe = JSON.parse(responseText);
+    // JSONテキストのクリーンアップ
+    let jsonText = responseText.trim();
+    jsonText = jsonText.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+
+    // JSONパースを試行、失敗時は修復を試みる
+    let recipe;
+    try {
+        recipe = JSON.parse(jsonText);
+    } catch (parseError) {
+        console.warn(`  ⚠️  JSONパースエラー: ${parseError.message}`);
+        console.warn('  🔧 JSON修復を試行中...');
+        recipe = tryRepairJSON(jsonText);
+        if (!recipe) {
+            const tail = jsonText.slice(-200);
+            console.error(`  📄 レスポンス末尾: ...${tail}`);
+            throw new Error(`JSONの解析に失敗しました: ${parseError.message}`);
+        }
+        console.log('  ✅ JSON修復成功');
+    }
 
     // メタデータを追加
     const videoId = extractVideoId(sourceUrl);
